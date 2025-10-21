@@ -3,6 +3,7 @@ import ElectricBorder from './ElectricBorder'
 import AddSingleTask from './AddSingleTask';
 import LoadFromLocal from './LoadFromLocal';
 
+
 export default function AddTask() {
   const [text, setText] = useState('');
   const [task, setTask] = useState([]);
@@ -94,6 +95,7 @@ export default function AddTask() {
           setTask={setTask}
         />
       </ElectricBorder>
+      <h1 className='text-white  text-center '>Dev. By Md Asaduzzaman</h1>
     </>
   )
 }

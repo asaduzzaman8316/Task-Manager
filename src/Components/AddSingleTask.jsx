@@ -14,7 +14,7 @@ function AddSingleTask(props) {
         props.setEditId(id);
     }
     return (
-        <div>
+        <>
             {props.task.map((item) =>
                 <div
                     key={item.id}
@@ -46,7 +46,7 @@ function AddSingleTask(props) {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     )
 }
 
