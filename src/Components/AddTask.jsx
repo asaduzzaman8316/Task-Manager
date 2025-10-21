@@ -102,19 +102,7 @@ export default function AddTask() {
 
           <div className='flex gap-5 flex-col mt-5'>
 
-            {task.map((item) =>
-              <div key={item.id} id={item.id} className='border p-2 rounded-md text-gray-200 border-gray-400 flex justify-between text-lg bg-[#101828]'>
-                <div className='flex gap-3'>
-                  <input type="checkbox" className='peer ' name="" id={item.text} />
-                  <label htmlFor={item.text} className='peer-checked:line-through'>{item.text}</label>
-                </div>
-                <div className='space-x-5'>
-                  <button className='text-red-500 cursor-pointer ' onClick={() => HandlerEdit(item.id)}>Edit</button>
-                  <button className='cursor-pointer hover:bg-[#ff104f] px-2 rounded-md duration-500 transition-all' onClick={() => HandlerDeleteTask(item.id)} >Remove</button>
-                </div>
-              </div>,
-
-            )}
+           
           </div>
         </div>
       </ElectricBorder>
