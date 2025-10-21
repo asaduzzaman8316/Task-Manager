@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ElectricBorder from './ElectricBorder'
+import AddSingleTask from './AddSingleTask';
+import LoadFromLocal from './LoadFromLocal';
 
 export default function AddTask() {
   const [text, setText] = useState('');
   const [task, setTask] = useState([]);
   const [editId, setEditId] = useState(null);
-  const [alart, setAlart] = useState("Enter Task")
+  const [alart, setAlart] = useState("Enter Task");
 
-  useEffect(() => {
-    // Load tasks stored with numeric keys (Date.now() used as key when saved)
-    const loaded = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (/^\d+$/.test(key)) { // only numeric keys
-        const raw = localStorage.getItem(key);
-        let value = raw;
-        try {
-          value = JSON.parse(raw);
-        } catch {
-          // value stays as raw string
-        }
-        loaded.push({ id: Number(key), text: String(value) });
-      }
-    }
-    // sort by id (timestamp) so older tasks appear first
-    loaded.sort((a, b) => a.id - b.id);
-    setTask(loaded);
-  }, [])
+
 
   function HandlerOnChange(e) {
     setText(e.target.value);
@@ -58,18 +41,7 @@ export default function AddTask() {
 
   }
 
-  const HandlerDeleteTask = (id) => {
-    //when match the item id and button id this is filter fun will not return this item;
-    setTask(task.filter((item) => item.id !== id))
-    localStorage.removeItem(id)
-  }
 
-  const HandlerEdit = (id) => {
-    const toEdite = task.find((item) => item.id === id);
-
-    setText(toEdite.text);
-    setEditId(id);
-  }
 
   const checkDuplicate = () => {
     return (task.find((item) => item.text === text))
@@ -93,18 +65,34 @@ export default function AddTask() {
           <div className='h-20'>
             <div className='flex justify-between w-full gap-5'>
               <div className='relative w-full'>
-                <input id='textInput' onChange={HandlerOnChange} type="text" className='w-full peer  p-3 border border-gray-400 focus:outline-none duration-500 transition-all  rounded-md items-center focus:border-[#ff104f] ' value={text} onKeyDown={(e) => e.key === "Enter" && HandlerOnClick()} />
-                <h1 className={`absolute top-3 left-2 ${text === '' && "peer-focus:-top-3"} ${text.length > 0 && "-translate-y-6"} duration-500 transition-all text-gray-300`}>{alart}</h1>
+                <input
+                  id='textInput'
+                  onChange={HandlerOnChange}
+                  type="text"
+                  className='w-full peer  p-3 border border-gray-400 focus:outline-none duration-500 transition-all  rounded-md items-center focus:border-[#ff104f] '
+                  value={text} onKeyDown={(e) => e.key === "Enter" && HandlerOnClick()}
+                />
+                <h1
+                  className={`absolute top-3 left-2 ${text === '' && "peer-focus:-top-3"} ${text.length > 0 && "-translate-y-6"} duration-500 transition-all text-gray-300`}
+                >{alart}</h1>
               </div>
-              <button onClick={HandlerOnClick} className='w-[40%]  px-4 rounded-md border-gray-400 font-semibold text-lg text-gray-200 hover:text-white active:scale-85 bg-[#ff104f] duration-500 transition-all cursor-pointer'>{editId ? "Save" : "Add Task"}</button>
+              <button
+                onClick={HandlerOnClick}
+                className='w-[40%]  px-4 rounded-md border-gray-400 font-semibold text-lg text-gray-200 hover:text-white active:scale-85 bg-[#ff104f] duration-500 transition-all cursor-pointer'>
+                {editId ? "Save" : "Add Task"}
+              </button>
             </div>
           </div>
 
           <div className='flex gap-5 flex-col mt-5'>
-
-           
+            <AddSingleTask
+              text={text} task={task} setTask={setTask} setText={setText} setEditId={setEditId}
+            />
           </div>
         </div>
+        <LoadFromLocal
+          setTask={setTask}
+        />
       </ElectricBorder>
     </>
   )
